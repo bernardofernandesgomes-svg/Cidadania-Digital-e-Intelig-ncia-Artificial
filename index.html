@@ -3,76 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cidadania Digital & IA Pro</title>
+<title>Cidadania Digital Pro</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <!-- LOGIN -->
-<div id="loginScreen">
-    <div class="loginBox">
-        <h1>🌐 Bem-vindo</h1>
-        <p>Digite seu nome para começar</p>
-        <input id="userInput" placeholder="Seu nome">
-        <button onclick="start()">Entrar</button>
-    </div>
+<div id="login">
+  <div class="box">
+    <h1>🌐 Bem-vindo</h1>
+    <input id="name" placeholder="Digite seu nome">
+    <button onclick="entrar()">Entrar</button>
+  </div>
 </div>
 
-<!-- APP -->
-<div id="app">
-
 <header>
-    <h1>🚀 Cidadania Digital Pro</h1>
-    <div id="userInfo"></div>
+  <h2>🚀 Cidadania Digital Pro</h2>
 </header>
 
 <nav>
-    <button onclick="showSection('home')">Início</button>
-    <button onclick="showSection('quiz')">Quiz</button>
-    <button onclick="showSection('ranking')">Ranking</button>
+  <button onclick="show('home')">Home</button>
+  <button onclick="show('quiz')">Quiz</button>
+  <button onclick="show('rank')">Ranking</button>
 </nav>
 
-<!-- HOME -->
-<section id="home" class="section active">
-    <h2>📘 Aprenda Tecnologia</h2>
-    <p>Estude cidadania digital e inteligência artificial de forma interativa.</p>
+<section id="home" class="page active">
+
+  <div class="hero">
+    <h1>Aprenda tecnologia de forma simples</h1>
+  </div>
+
+  <div class="grid">
 
     <div class="card">
-        <h3>🤖 Inteligência Artificial</h3>
-        <p>Máquinas que aprendem com dados e tomam decisões.</p>
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
+      <h3>Cidadania Digital</h3>
+      <p>Uso responsável da internet e redes sociais.</p>
     </div>
 
     <div class="card">
-        <h3>📱 Cidadania Digital</h3>
-        <p>Uso seguro, ético e responsável da internet.</p>
+      <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
+      <h3>Inteligência Artificial</h3>
+      <p>Máquinas que aprendem com dados.</p>
     </div>
-</section>
-
-<!-- QUIZ -->
-<section id="quiz" class="section">
-    <h2>🧠 Quiz Pro</h2>
 
     <div class="card">
-        <h3 id="question">Pergunta</h3>
-        <div id="answers"></div>
-        <p id="feedback"></p>
-        <button onclick="next()">Próxima</button>
+      <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b">
+      <h3>Segurança</h3>
+      <p>Proteja seus dados online.</p>
     </div>
+
+  </div>
+
 </section>
 
-<!-- RANKING -->
-<section id="ranking" class="section">
-    <h2>🏆 Ranking</h2>
-    <div id="rankingList"></div>
+<section id="quiz" class="page">
+
+  <div class="box2">
+    <h2 id="q">Pergunta</h2>
+    <div id="a"></div>
+    <p id="f"></p>
+    <button onclick="next()">Próxima</button>
+  </div>
+
 </section>
 
-</div>
+<section id="rank" class="page">
+
+  <h2>🏆 Ranking</h2>
+  <div id="ranking"></div>
+
+</section>
 
 <footer>
 feito por Bernardo Fernandes
 </footer>
 
-<script src="app.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
