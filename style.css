@@ -1,362 +1,158 @@
-/* --- FOLHA DE ESTILOS DA INTERFACE (MUNDO DARK) --- */
-:root {
-    --bg-principal: #0a0d16;
-    --bg-card: #131926;
-    --bg-input: #1c2536;
-    --texto-claro: #f3f4f6;
-    --texto-mutado: #9ca3af;
-    --cor-primaria: #2563eb;    /* Tom Azul Tecnológico */
-    --cor-secundaria: #7c3aed;  /* Tom Roxo Algorítmico */
-    --cor-sucesso: #10b981;     /* Indicativos Verdes */
-    --cor-erro: #ef4444;        /* Indicativos Vermelhos */
-    --transicao: all 0.25s ease;
+/**
+ * --- COMPORTAMENTO LÓGICO COMPLETO DO PROJETO ---
+ */
+
+// Repositório de informações estáticas injetadas na aba "Explorador de Contexto"
+const bancoContextos = {
+    privacidade: {
+        titulo: "Privacidade de Dados na Era da IA",
+        texto: "Cada clique, curtida ou pesquisa que você realiza gera dados. Sistemas inteligentes recolhem e cruzam esse rastro digital para criar um 'gêmeo estatístico' seu. Esse processo permite que algoritmos preditivos manipulem o feed de redes sociais e exibam anúncios hiper-direcionados.",
+        exemplo: "Recomendações automáticas de streaming e propagandas preditivas de produtos que você apenas comentou verbalmente perto do microfone do celular."
+    },
+    desinformacao: {
+        titulo: "Combate à Desinformação Algorítmica",
+        texto: "A IA generativa consegue escrever textos persuasivos imitando artigos jornalísticos reais e forjar mídias de forma escalável. O papel fundamental do cidadão moderno é rastrear a autenticidade da informação e recusar o compartilhamento compulsivo de links alarmistas.",
+        exemplo: "Notícias falsas geradas por robôs que se espalham 6 vezes mais rápido nas redes sociais do que notícias verdadeiras devido ao apelo emocional puro."
+    },
+    futuro: {
+        titulo: "Inclusão Digital e o Mercado de Trabalho",
+        texto: "A automação de processos via modelos de linguagem e visão computacional altera drasticamente profissões operacionais. Garantir inclusão significa requalificar os trabalhadores e democratizar o acesso técnico às ferramentas computacionais avançadas.",
+        exemplo: "Criação de novos cargos de trabalho focados exclusivamente em auditoria de ética de IA e engenharia de prompts estruturados."
+    }
+};
+
+/**
+ * Controla a mudança visual dos botões e atualiza o painel de textos do Hub
+ */
+function mudarContexto(chave, botao) {
+    const botoes = document.querySelectorAll('.aba-btn');
+    botoes.forEach(b => b.classList.remove('ativa'));
+    botao.classList.add('ativa');
+
+    const painel = document.getElementById('painel-contexto');
+    const dados = bancoContextos[chave];
+
+    painel.innerHTML = `
+        <h3>${dados.titulo}</h3>
+        <p style="margin-top: 1rem; color: var(--texto-mutado);">${dados.texto}</p>
+        <div class="caixa-exemplo">
+            <strong>Exemplo Prático:</strong> ${dados.exemplo}
+        </div>
+    `;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+// Banco de dados interno contendo as perguntas do quiz
+const perguntasQuiz = [
+    {
+        pergunta: "Qual a melhor postura ética ao encontrar uma imagem impressionante que suspeita ter sido gerada por IA?",
+        opcoes: [
+            { texto: "Compartilhar imediatamente para ganhar seguidores rápidos.", correta: false },
+            { texto: "Verificar a fonte original e indicar claramente aos outros que é IA.", correta: true },
+            { texto: "Ignorar e fingir que é uma fotografia do mundo real.", correta: false }
+        ]
+    },
+    {
+        pergunta: "De onde surgem os vieses e preconceitos exibidos por uma Inteligência Artificial?",
+        opcoes: [
+            { texto: "Eles surgem de falhas nos cabos de rede e servidores de dados.", correta: false },
+            { texto: "A IA cria seus próprios preconceitos de forma autônoma e consciente.", correta: false },
+            { texto: "Eles refletem preconceitos históricos contidos nos dados de treino humanos.", correta: true }
+        ]
+    },
+    {
+        pergunta: "O que representa o conceito de 'Pegada Digital' no contexto de cidadania?",
+        opcoes: [
+            { texto: "O rastro permanente de dados coletados sobre suas ações online.", correta: true },
+            { texto: "O tamanho do monitor ou tela do dispositivo móvel usado.", correta: false },
+            { texto: "A quantidade de energia que o roteador de internet consome.", correta: false }
+        ]
+    }
+];
+
+let indiceAtual = 0;
+let pontuacaoAcertos = 0;
+let respondeuQuestao = false;
+
+/**
+ * Renderiza dinamicamente as questões estruturadas do Quiz na tela
+ */
+function carregarPergunta() {
+    respondeuQuestao = false;
+    document.getElementById('btn-proximo').style.display = "none";
+    document.getElementById('feedback-quiz').innerHTML = "";
+    
+    const infoQuestao = perguntasQuiz[indiceAtual];
+    document.getElementById('progresso-txt').innerText = `Pergunta ${indiceAtual + 1} de ${perguntasQuiz.length}`;
+    document.getElementById('pergunta-txt').innerText = infoQuestao.pergunta;
+
+    const containerOpcoes = document.getElementById('lista-opcoes');
+    containerOpcoes.innerHTML = "";
+
+    infoQuestao.opcoes.forEach((opcao, idx) => {
+        const divOpcao = document.createElement('div');
+        divOpcao.className = "opcao-quiz";
+        divOpcao.innerText = opcao.texto;
+        divOpcao.onclick = () => avaliarEscolha(divOpcao, opcao.correta);
+        containerOpcoes.appendChild(divOpcao);
+    });
 }
 
-html {
-    scroll-behavior: smooth;
+/**
+ * Bloqueia repetições e faz a checagem da opção escolhida pelo usuário
+ */
+function avaliarEscolha(elementoClicado, eCorreta) {
+    if (respondeuQuestao) return; 
+    respondeuQuestao = true;
+
+    const todasOpcoes = document.querySelectorAll('.opcao-quiz');
+    const feedback = document.getElementById('feedback-quiz');
+
+    if (eCorreta) {
+        elementoClicado.classList.add('correta');
+        feedback.innerText = "🎉 Resposta Correta!";
+        feedback.style.color = "var(--cor-sucesso)";
+        pontuacaoAcertos++;
+    } else {
+        elementoClicado.classList.add('errada');
+        feedback.innerText = "❌ Resposta Incorreta!";
+        feedback.style.color = "var(--cor-erro)";
+        
+        todasOpcoes.forEach((op, idx) => {
+            if (perguntasQuiz[indiceAtual].opcoes[idx].correta) {
+                op.classList.add('correta');
+            }
+        });
+    }
+
+    document.getElementById('btn-proximo').style.display = "inline-block";
 }
 
-body {
-    background-color: var(--bg-principal);
-    color: var(--texto-claro);
-    line-height: 1.6;
+/**
+ * Passa o quiz para o próximo índice ou mostra o placar geral final
+ */
+function proximaPergunta() {
+    indiceAtual++;
+    if (indiceAtual < perguntasQuiz.length) {
+        carregarPergunta();
+    } else {
+        document.getElementById('bloco-quiz-conteudo').style.display = "none";
+        document.getElementById('bloco-quiz-resultado').style.display = "block";
+        document.getElementById('pontuacao-final-txt').innerText = `Você acertou ${pontuacaoAcertos} de ${perguntasQuiz.length} perguntas.`;
+    }
 }
 
-/* --- ESTILIZAÇÃO DO TOPO / NAVBAR --- */
-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: rgba(10, 13, 22, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+/**
+ * Reseta o estado original do quiz para novo início
+ */
+function reiniciarQuiz() {
+    indiceAtual = 0;
+    pontuacaoAcertos = 0;
+    document.getElementById('bloco-quiz-resultado').style.display = "none";
+    document.getElementById('bloco-quiz-conteudo').style.display = "block";
+    carregarPergunta();
 }
 
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 2rem;
-}
-
-.logo {
-    font-size: 1.4rem;
-    font-weight: 800;
-}
-
-.logo span {
-    color: var(--cor-secundaria);
-}
-
-.autor-tag-menu {
-    font-size: 0.85rem;
-    background: linear-gradient(45deg, var(--cor-primaria), var(--cor-secundaria));
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-weight: 600;
-    color: #ffffff;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-    align-items: center;
-}
-
-.nav-menu a {
-    color: var(--texto-mutado);
-    text-decoration: none;
-    font-weight: 500;
-    transition: var(--transicao);
-}
-
-.nav-menu a:hover {
-    color: var(--texto-claro);
-}
-
-/* --- ESTILIZAÇÃO DO APRESENTADOR HERO --- */
-.hero {
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 9rem 2rem 4rem 2rem;
-    background: radial-gradient(circle at 50% 30%, rgba(37, 99, 235, 0.1) 0%, transparent 65%);
-}
-
-.hero-conteudo {
-    max-width: 800px;
-}
-
-.tag-autor-principal {
-    display: inline-block;
-    padding: 0.5rem 1.2rem;
-    background: rgba(124, 58, 237, 0.15);
-    color: #c084fc;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    border: 1px solid rgba(124, 58, 237, 0.3);
-    letter-spacing: 0.5px;
-}
-
-.hero h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(to right, #ffffff, #93c5fd);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    color: var(--texto-mutado);
-    margin-bottom: 2.5rem;
-}
-
-.btn {
-    display: inline-block;
-    padding: 0.9rem 2.2rem;
-    font-weight: 600;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
-    border: none;
-    cursor: pointer;
-    transition: var(--transicao);
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
-}
-
-/* --- SEÇÕES E GRIDS DE IMAGENS --- */
-section {
-    padding: 5rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.secao-alternada {
-    background: rgba(255, 255, 255, 0.01);
-    border-top: 1px solid rgba(255, 255, 255, 0.02);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-    max-width: 100%;
-}
-
-.container-interno {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.titulo-secao {
-    font-size: 2.3rem;
-    text-align: center;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.subtitulo-secao {
-    text-align: center;
-    color: var(--texto-mutado);
-    margin-bottom: 3.5rem;
-}
-
-.grid-galeria {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.card-galeria {
-    background: var(--bg-card);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: var(--transicao);
-}
-
-.card-galeria:hover {
-    transform: translateY(-5px);
-    border-color: var(--cor-primaria);
-}
-
-.container-img {
-    width: 100%;
-    height: 200px;
-    background: #1a2233;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.img-placeholder-1 { background: linear-gradient(45deg, #1e3a8a, #3b82f6); width: 100%; height: 100%; opacity: 0.7; }
-.img-placeholder-2 { background: linear-gradient(45deg, #4c1d95, #8b5cf6); width: 100%; height: 100%; opacity: 0.7; }
-.img-placeholder-3 { background: linear-gradient(45deg, #064e3b, #10b981); width: 100%; height: 100%; opacity: 0.7; }
-
-.texto-sobreposto-img {
-    position: absolute;
-    font-size: 3rem;
-}
-
-.conteudo-galeria {
-    padding: 1.5rem;
-}
-
-.conteudo-galeria h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-}
-
-.conteudo-galeria p {
-    font-size: 0.95rem;
-    color: var(--texto-mutado);
-}
-
-/* --- ELEMENTOS DE ABAS (HUB) --- */
-.abas-container {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
-
-.aba-btn {
-    background: var(--bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    color: var(--texto-mutado);
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: var(--transicao);
-}
-
-.aba-btn:hover {
-    color: white;
-    border-color: var(--cor-primaria);
-}
-
-.aba-btn.ativa {
-    background: var(--cor-primaria);
-    color: white;
-    border-color: var(--cor-primaria);
-}
-
-.painel-conteudo {
-    background: var(--bg-card);
-    padding: 2.5rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.caixa-exemplo {
-    background: rgba(124, 58, 237, 0.07);
-    border-left: 4px solid var(--cor-secundaria);
-    padding: 1.2rem;
-    margin-top: 1.5rem;
-    border-radius: 0 8px 8px 0;
-}
-
-/* --- ELEMENTOS VISUAIS DO QUIZ --- */
-.container-quiz {
-    background: var(--bg-card);
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 2.5rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.progresso-quiz {
-    font-size: 0.9rem;
-    color: var(--cor-secundaria);
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.opcoes-lista {
-    margin-top: 1.5rem;
-}
-
-.opcao-quiz {
-    background: rgba(255, 255, 255, 0.03);
-    padding: 1rem 1.2rem;
-    border-radius: 8px;
-    margin-bottom: 0.8rem;
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: var(--transicao);
-}
-
-.opcao-quiz:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-/* Classes dinâmicas injetadas pelo JavaScript com uso do marcados !important */
-.opcao-quiz.correta { background: rgba(16, 185, 129, 0.15) !important; border-color: var(--cor-sucesso) !important; }
-.opcao-quiz.errada { background: rgba(239, 68, 68, 0.15) !important; border-color: var(--cor-erro) !important; }
-
-#feedback-quiz {
-    margin-top: 1.5rem;
-    font-weight: 600;
-    min-height: 24px;
-}
-
-.btn-proximo {
-    margin-top: 1.5rem;
-    background: var(--cor-secundaria);
-    display: none;
-}
-
-/* --- TERMINAÇÕES DE RODAPÉ --- */
-footer {
-    text-align: center;
-    padding: 4rem 2rem;
-    background-color: #05070a;
-    border-top: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-footer .nome-assinatura {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 0.5rem;
-}
-
-footer p {
-    color: var(--texto-mutado);
-    font-size: 0.9rem;
-}
-
-/* --- ADAPTAÇÕES SMARTPHONES --- */
-@media(max-width: 768px) {
-    .nav-menu { display: none; }
-    .hero h1 { font-size: 2.3rem; }
-    section { padding: 4rem 1.5rem; }
-}
+// Inicia de forma automática os gatilhos ao carregar a página web
+window.onload = () => {
+    carregarPergunta();
+};
