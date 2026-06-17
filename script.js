@@ -1,145 +1,79 @@
-let user = "";
-let xp = 0;
-let level = 1;
-let index = 0;
+let user="";
+let i=0;
+let score=0;
 
-const quiz = [
-{
-q:"O que é cidadania digital?",
-a:["Uso responsável da internet","Jogo","Virus"],
-c:0
-},
-{
-q:"IA significa?",
-a:["Internet Avançada","Inteligência Artificial","Input Automático"],
-c:1
-},
-{
-q:"Boa prática online?",
-a:["Compartilhar senha","Respeitar pessoas","Fake news"],
-c:1
-},
-{
-q:"Segurança digital é?",
-a:["Proteção de dados","Memes","Jogos"],
-c:0
-},
-{
-q:"IA aprende com?",
-a:["Dados","Sorte","Vídeos aleatórios"],
-c:0
+function entrar(){
+user=document.getElementById("name").value;
+if(user==="") return;
+
+document.getElementById("login").style.display="none";
 }
+
+function show(p){
+document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+document.getElementById(p).classList.add("active");
+}
+
+const quiz=[
+{q:"O que é cidadania digital?",a:["Uso correto da internet","Jogo","Virus"],c:0},
+{q:"IA é?",a:["Máquina inteligente","Navegador","App"],c:0},
+{q:"Segurança digital protege?",a:["Dados","Fotos","Vídeos"],c:0}
 ];
 
-// LOGIN
-function start(){
-user = document.getElementById("userInput").value;
+function load(){
+let q=quiz[i];
+document.getElementById("q").innerText=q.q;
 
-if(user === ""){
-alert("Digite seu nome");
-return;
-}
+let box=document.getElementById("a");
+box.innerHTML="";
 
-document.getElementById("loginScreen").style.display = "none";
+q.a.forEach((x,idx)=>{
+let b=document.createElement("button");
+b.innerText=x;
 
-document.getElementById("userInfo").innerText = "👤 " + user;
-
-loadQuiz();
-loadRanking();
-showSection("home");
-}
-
-// SEÇÕES
-function showSection(id){
-document.querySelectorAll(".section").forEach(s=>{
-s.classList.remove("active");
-});
-
-document.getElementById(id).classList.add("active");
-}
-
-// QUIZ
-function loadQuiz(){
-let q = quiz[index];
-
-document.getElementById("question").innerText = q.q;
-
-let box = document.getElementById("answers");
-box.innerHTML = "";
-
-q.a.forEach((item,i)=>{
-let btn = document.createElement("button");
-btn.innerText = item;
-
-btn.onclick = ()=>{
-if(i === q.c){
-xp += 10;
-document.getElementById("feedback").innerText = "✔ Correto!";
-levelUp();
+b.onclick=()=>{
+if(idx===q.c){
+score++;
+document.getElementById("f").innerText="✔ certo";
 }else{
-document.getElementById("feedback").innerText = "❌ Errado!";
+document.getElementById("f").innerText="❌ errado";
 }
-};
+}
 
-box.appendChild(btn);
+box.appendChild(b);
 });
 }
 
 function next(){
-index++;
+i++;
 
-document.getElementById("feedback").innerText = "";
+document.getElementById("f").innerText="";
 
-if(index < quiz.length){
-loadQuiz();
+if(i<quiz.length){
+load();
 }else{
-saveRanking();
+document.getElementById("q").innerText="Fim!";
+document.getElementById("a").innerHTML="Pontuação: "+score;
 
-document.getElementById("question").innerText = "Fim do Quiz!";
-document.getElementById("answers").innerHTML =
-"XP final: " + xp;
-
-loadRanking();
+save();
+showRank();
 }
 }
 
-// LEVEL SYSTEM
-function levelUp(){
-if(xp % 30 === 0){
-level++;
-alert("🔥 Level up! Você está no nível " + level);
-}
-}
-
-// RANKING
-function saveRanking(){
-let data = JSON.parse(localStorage.getItem("rank")) || [];
-
-data.push({
-name:user,
-xp:xp,
-level:level
-});
-
-localStorage.setItem("rank", JSON.stringify(data));
+/* ranking */
+function save(){
+let r=JSON.parse(localStorage.getItem("r"))||[];
+r.push({n:user,s:score});
+localStorage.setItem("r",JSON.stringify(r));
 }
 
-function loadRanking(){
-let data = JSON.parse(localStorage.getItem("rank")) || [];
+function showRank(){
+let r=JSON.parse(localStorage.getItem("r"))||[];
+r.sort((a,b)=>b.s-a.s);
 
-data.sort((a,b)=>b.xp - a.xp);
-
-let html = "";
-
-data.forEach(d=>{
-html += `
-<div class="card">
-🏅 ${d.name}<br>
-⭐ XP: ${d.xp}<br>
-📊 Level: ${d.level}
-</div>
-`;
-});
-
-document.getElementById("rankingList").innerHTML = html;
+document.getElementById("ranking").innerHTML=
+r.map(x=>`<p>🏅 ${x.n} - ${x.s}</p>`).join("");
 }
+
+load();
+showRank();
