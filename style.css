@@ -1,158 +1,82 @@
-/**
- * --- COMPORTAMENTO LÓGICO COMPLETO DO PROJETO ---
- */
-
-// Repositório de informações estáticas injetadas na aba "Explorador de Contexto"
-const bancoContextos = {
-    privacidade: {
-        titulo: "Privacidade de Dados na Era da IA",
-        texto: "Cada clique, curtida ou pesquisa que você realiza gera dados. Sistemas inteligentes recolhem e cruzam esse rastro digital para criar um 'gêmeo estatístico' seu. Esse processo permite que algoritmos preditivos manipulem o feed de redes sociais e exibam anúncios hiper-direcionados.",
-        exemplo: "Recomendações automáticas de streaming e propagandas preditivas de produtos que você apenas comentou verbalmente perto do microfone do celular."
-    },
-    desinformacao: {
-        titulo: "Combate à Desinformação Algorítmica",
-        texto: "A IA generativa consegue escrever textos persuasivos imitando artigos jornalísticos reais e forjar mídias de forma escalável. O papel fundamental do cidadão moderno é rastrear a autenticidade da informação e recusar o compartilhamento compulsivo de links alarmistas.",
-        exemplo: "Notícias falsas geradas por robôs que se espalham 6 vezes mais rápido nas redes sociais do que notícias verdadeiras devido ao apelo emocional puro."
-    },
-    futuro: {
-        titulo: "Inclusão Digital e o Mercado de Trabalho",
-        texto: "A automação de processos via modelos de linguagem e visão computacional altera drasticamente profissões operacionais. Garantir inclusão significa requalificar os trabalhadores e democratizar o acesso técnico às ferramentas computacionais avançadas.",
-        exemplo: "Criação de novos cargos de trabalho focados exclusivamente em auditoria de ética de IA e engenharia de prompts estruturados."
-    }
-};
-
-/**
- * Controla a mudança visual dos botões e atualiza o painel de textos do Hub
- */
-function mudarContexto(chave, botao) {
-    const botoes = document.querySelectorAll('.aba-btn');
-    botoes.forEach(b => b.classList.remove('ativa'));
-    botao.classList.add('ativa');
-
-    const painel = document.getElementById('painel-contexto');
-    const dados = bancoContextos[chave];
-
-    painel.innerHTML = `
-        <h3>${dados.titulo}</h3>
-        <p style="margin-top: 1rem; color: var(--texto-mutado);">${dados.texto}</p>
-        <div class="caixa-exemplo">
-            <strong>Exemplo Prático:</strong> ${dados.exemplo}
-        </div>
-    `;
+body{
+margin:0;
+font-family:Arial;
+background:#0f172a;
+color:white;
 }
 
-// Banco de dados interno contendo as perguntas do quiz
-const perguntasQuiz = [
-    {
-        pergunta: "Qual a melhor postura ética ao encontrar uma imagem impressionante que suspeita ter sido gerada por IA?",
-        opcoes: [
-            { texto: "Compartilhar imediatamente para ganhar seguidores rápidos.", correta: false },
-            { texto: "Verificar a fonte original e indicar claramente aos outros que é IA.", correta: true },
-            { texto: "Ignorar e fingir que é uma fotografia do mundo real.", correta: false }
-        ]
-    },
-    {
-        pergunta: "De onde surgem os vieses e preconceitos exibidos por uma Inteligência Artificial?",
-        opcoes: [
-            { texto: "Eles surgem de falhas nos cabos de rede e servidores de dados.", correta: false },
-            { texto: "A IA cria seus próprios preconceitos de forma autônoma e consciente.", correta: false },
-            { texto: "Eles refletem preconceitos históricos contidos nos dados de treino humanos.", correta: true }
-        ]
-    },
-    {
-        pergunta: "O que representa o conceito de 'Pegada Digital' no contexto de cidadania?",
-        opcoes: [
-            { texto: "O rastro permanente de dados coletados sobre suas ações online.", correta: true },
-            { texto: "O tamanho do monitor ou tela do dispositivo móvel usado.", correta: false },
-            { texto: "A quantidade de energia que o roteador de internet consome.", correta: false }
-        ]
-    }
-];
-
-let indiceAtual = 0;
-let pontuacaoAcertos = 0;
-let respondeuQuestao = false;
-
-/**
- * Renderiza dinamicamente as questões estruturadas do Quiz na tela
- */
-function carregarPergunta() {
-    respondeuQuestao = false;
-    document.getElementById('btn-proximo').style.display = "none";
-    document.getElementById('feedback-quiz').innerHTML = "";
-    
-    const infoQuestao = perguntasQuiz[indiceAtual];
-    document.getElementById('progresso-txt').innerText = `Pergunta ${indiceAtual + 1} de ${perguntasQuiz.length}`;
-    document.getElementById('pergunta-txt').innerText = infoQuestao.pergunta;
-
-    const containerOpcoes = document.getElementById('lista-opcoes');
-    containerOpcoes.innerHTML = "";
-
-    infoQuestao.opcoes.forEach((opcao, idx) => {
-        const divOpcao = document.createElement('div');
-        divOpcao.className = "opcao-quiz";
-        divOpcao.innerText = opcao.texto;
-        divOpcao.onclick = () => avaliarEscolha(divOpcao, opcao.correta);
-        containerOpcoes.appendChild(divOpcao);
-    });
+header{
+background:#111827;
+padding:20px;
+display:flex;
+justify-content:space-between;
 }
 
-/**
- * Bloqueia repetições e faz a checagem da opção escolhida pelo usuário
- */
-function avaliarEscolha(elementoClicado, eCorreta) {
-    if (respondeuQuestao) return; 
-    respondeuQuestao = true;
-
-    const todasOpcoes = document.querySelectorAll('.opcao-quiz');
-    const feedback = document.getElementById('feedback-quiz');
-
-    if (eCorreta) {
-        elementoClicado.classList.add('correta');
-        feedback.innerText = "🎉 Resposta Correta!";
-        feedback.style.color = "var(--cor-sucesso)";
-        pontuacaoAcertos++;
-    } else {
-        elementoClicado.classList.add('errada');
-        feedback.innerText = "❌ Resposta Incorreta!";
-        feedback.style.color = "var(--cor-erro)";
-        
-        todasOpcoes.forEach((op, idx) => {
-            if (perguntasQuiz[indiceAtual].opcoes[idx].correta) {
-                op.classList.add('correta');
-            }
-        });
-    }
-
-    document.getElementById('btn-proximo').style.display = "inline-block";
+nav{
+display:flex;
+justify-content:center;
+gap:10px;
+padding:10px;
+background:#1e293b;
 }
 
-/**
- * Passa o quiz para o próximo índice ou mostra o placar geral final
- */
-function proximaPergunta() {
-    indiceAtual++;
-    if (indiceAtual < perguntasQuiz.length) {
-        carregarPergunta();
-    } else {
-        document.getElementById('bloco-quiz-conteudo').style.display = "none";
-        document.getElementById('bloco-quiz-resultado').style.display = "block";
-        document.getElementById('pontuacao-final-txt').innerText = `Você acertou ${pontuacaoAcertos} de ${perguntasQuiz.length} perguntas.`;
-    }
+button{
+padding:10px;
+border:none;
+background:#38bdf8;
+cursor:pointer;
+border-radius:5px;
 }
 
-/**
- * Reseta o estado original do quiz para novo início
- */
-function reiniciarQuiz() {
-    indiceAtual = 0;
-    pontuacaoAcertos = 0;
-    document.getElementById('bloco-quiz-resultado').style.display = "none";
-    document.getElementById('bloco-quiz-conteudo').style.display = "block";
-    carregarPergunta();
+button:hover{
+background:#0ea5e9;
 }
 
-// Inicia de forma automática os gatilhos ao carregar a página web
-window.onload = () => {
-    carregarPergunta();
-};
+.section{
+display:none;
+padding:30px;
+max-width:900px;
+margin:auto;
+}
+
+.active{
+display:block;
+}
+
+.card{
+background:#1e293b;
+padding:15px;
+margin:10px 0;
+border-radius:10px;
+}
+
+#loginScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.loginBox{
+background:#1e293b;
+padding:30px;
+border-radius:10px;
+text-align:center;
+}
+
+input{
+padding:10px;
+margin:10px;
+width:200px;
+}
+
+footer{
+text-align:center;
+padding:20px;
+background:#111827;
+}
