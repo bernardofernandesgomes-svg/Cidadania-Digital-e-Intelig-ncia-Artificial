@@ -1,134 +1,78 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cidadania Digital & IA - Por Bernardo Fernandes</title>
-    <!-- Conecta o arquivo CSS externo de forma limpa -->
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cidadania Digital & IA Pro</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- BARRA DE NAVEGAÇÃO -->
-    <header>
-        <div class="nav-container">
-            <div class="logo">Cidadania<span>IA</span></div>
-            <ul class="nav-menu">
-                <li><a href="#inicio">Início</a></li>
-                <li><a href="#galeria">Impactos</a></li>
-                <li><a href="#hub">Contextos</a></li>
-                <li><a href="#quiz-secao">Desafio</a></li>
-                <li class="autor-tag-menu">Dev: Bernardo Fernandes</li>
-            </ul>
-        </div>
-    </header>
+<!-- LOGIN -->
+<div id="loginScreen">
+    <div class="loginBox">
+        <h1>🌐 Bem-vindo</h1>
+        <p>Digite seu nome para começar</p>
+        <input id="userInput" placeholder="Seu nome">
+        <button onclick="start()">Entrar</button>
+    </div>
+</div>
 
-    <!-- APRESENTAÇÃO PRINCIPAL (HERO) -->
-    <section id="inicio" class="hero">
-        <div class="hero-conteudo">
-            <div class="tag-autor-principal">Projeto de Bernardo Fernandes</div>
-            <h1>Consciência Humana e Inteligência Artificial</h1>
-            <p>Descubra como exercer seus direitos digitais, combater vieses automáticos e se proteger contra a desinformação em massa gerada por algoritmos.</p>
-            <a href="#galeria" class="btn">Explorar Conteúdo</a>
-        </div>
-    </section>
+<!-- APP -->
+<div id="app">
 
-    <!-- SEÇÃO GALERIA DE CARDS -->
-    <section id="galeria">
-        <h2 class="titulo-secao">Áreas Críticas da Cidadania Digital</h2>
-        <p class="subtitulo-secao">O avanço rápido dos algoritmos exige novas responsabilidades e cuidados na rede.</p>
-        
-        <div class="grid-galeria">
-            <div class="card-galeria">
-                <div class="container-img">
-                    <div class="img-placeholder-1"></div>
-                    <div class="texto-sobreposto-img">🛡️</div>
-                </div>
-                <div class="conteudo-galeria">
-                    <h3>Vigilância de Dados</h3>
-                    <p>Sistemas de IA analisam perfis digitais para monitorar preferências cotidianas e automatizar tomadas de decisão mercadológicas sobre os cidadãos.</p>
-                </div>
-            </div>
-            <div class="card-galeria">
-                <div class="container-img">
-                    <div class="img-placeholder-2"></div>
-                    <div class="texto-sobreposto-img">🤖</div>
-                </div>
-                <div class="conteudo-galeria">
-                    <h3>Mídias Sintéticas</h3>
-                    <p>Deepfakes de áudio e vídeo criados por IA generativa desafiam a autenticidade de notícias, exigindo checagem rigorosa de fontes.</p>
-                </div>
-            </div>
-            <div class="card-galeria">
-                <div class="container-img">
-                    <div class="img-placeholder-3"></div>
-                    <div class="texto-sobreposto-img">⚖️</div>
-                </div>
-                <div class="conteudo-galeria">
-                    <h3>Ética Algorítmica</h3>
-                    <p>Sistemas automatizados podem herdar e multiplicar preconceitos históricos caso as bases de dados de treino sejam enviesadas.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<header>
+    <h1>🚀 Cidadania Digital Pro</h1>
+    <div id="userInfo"></div>
+</header>
 
-    <!-- SEÇÃO INTERATIVA DE ABAS (HUB) -->
-    <section id="hub" class="secao-alternada">
-        <div class="container-interno">
-            <h2 class="titulo-secao">Explorador de Contexto</h2>
-            <p class="subtitulo-secao">Selecione um tópico abaixo para abrir informações aprofundadas instantaneamente.</p>
-            
-            <div class="abas-container">
-                <button class="aba-btn ativa" onclick="mudarContexto('privacidade', this)">Privacidade Avançada</button>
-                <button class="aba-btn" onclick="mudarContexto('desinformacao', this)">Combate a Fake News</button>
-                <button class="aba-btn" onclick="mudarContexto('futuro', this)">Inclusão & Emprego</button>
-            </div>
+<nav>
+    <button onclick="showSection('home')">Início</button>
+    <button onclick="showSection('quiz')">Quiz</button>
+    <button onclick="showSection('ranking')">Ranking</button>
+</nav>
 
-            <div id="painel-contexto" class="painel-conteudo">
-                <h3>Privacidade de Dados na Era da IA</h3>
-                <p style="margin-top: 1rem; color: var(--texto-mutado);">Cada clique, curtida ou pesquisa que você realiza gera dados. Sistemas inteligentes recolhem e cruzam esse rastro digital para criar um "gêmeo estatístico" seu. Esse processo permite que algoritmos preditivos manipulem o feed de redes sociais e exibam anúncios hiper-direcionados.</p>
-                <div class="caixa-exemplo">
-                    <strong>Exemplo Prático:</strong> Recomendações automáticas de streaming e propagandas preditivas de produtos que você apenas comentou verbalmente perto do microfone do celular.
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- HOME -->
+<section id="home" class="section active">
+    <h2>📘 Aprenda Tecnologia</h2>
+    <p>Estude cidadania digital e inteligência artificial de forma interativa.</p>
 
-    <!-- SEÇÃO DO QUIZ DINÂMICO -->
-    <section id="quiz-secao">
-        <h2 class="titulo-secao">Quiz da Cidadania Inteligente</h2>
-        <p class="subtitulo-secao">Responda às questões e teste seu nível de consciência digital.</p>
-        
-        <div class="container-quiz">
-            <div id="bloco-quiz-conteudo">
-                <div id="progresso-txt" class="progresso-quiz">Pergunta 1 de 3</div>
-                <h3 id="pergunta-txt">Carregando pergunta...</h3>
-                
-                <div id="lista-opcoes" class="opcoes-lista">
-                    <!-- Preenchido pelo JavaScript dinamicamente -->
-                </div>
-                
-                <div id="feedback-quiz"></div>
-                <button id="btn-proximo" class="btn btn-proximo" onclick="proximaPergunta()">Avançar Questão</button>
-            </div>
-            
-            <!-- Janela do Placar Final (Escondida por padrão) -->
-            <div id="bloco-quiz-resultado" style="display: none; text-align: center;">
-                <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">🏁 Quiz Concluído!</h3>
-                <p id="pontuacao-final-txt" style="font-size: 1.2rem; margin-bottom: 1.5rem;"></p>
-                <button class="btn" onclick="reiniciarQuiz()">Refazer Teste</button>
-            </div>
-        </div>
-    </section>
+    <div class="card">
+        <h3>🤖 Inteligência Artificial</h3>
+        <p>Máquinas que aprendem com dados e tomam decisões.</p>
+    </div>
 
-    <!-- RODAPÉ DA PÁGINA -->
-    <footer>
-        <div class="nome-assinatura">Bernardo Fernandes</div>
-        <p>Desenvolvedor & Autor do Projeto — Cidadania Digital e IA © 2026</p>
-        <p style="margin-top: 0.5rem; font-size: 0.75rem; color: #4b5563;">Construído com HTML5 estruturado, CSS Flexbox/Grid e JavaScript Dinâmico Vanilla.</p>
-    </footer>
+    <div class="card">
+        <h3>📱 Cidadania Digital</h3>
+        <p>Uso seguro, ético e responsável da internet.</p>
+    </div>
+</section>
 
-    <!-- Conecta o arquivo JavaScript no final do carregamento corporal -->
-    <script src="script.js"></script>
+<!-- QUIZ -->
+<section id="quiz" class="section">
+    <h2>🧠 Quiz Pro</h2>
+
+    <div class="card">
+        <h3 id="question">Pergunta</h3>
+        <div id="answers"></div>
+        <p id="feedback"></p>
+        <button onclick="next()">Próxima</button>
+    </div>
+</section>
+
+<!-- RANKING -->
+<section id="ranking" class="section">
+    <h2>🏆 Ranking</h2>
+    <div id="rankingList"></div>
+</section>
+
+</div>
+
+<footer>
+feito por Bernardo Fernandes
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>
