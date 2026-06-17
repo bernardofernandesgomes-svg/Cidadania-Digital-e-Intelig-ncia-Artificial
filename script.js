@@ -2,11 +2,20 @@ let user="";
 let i=0;
 let score=0;
 
+/* 🔥 ADIÇÃO: nível do usuário */
+let level=1;
+
 function entrar(){
 user=document.getElementById("name").value;
 if(user==="") return;
 
 document.getElementById("login").style.display="none";
+
+/* 🔥 ADIÇÃO: boas-vindas */
+alert("Bem-vindo " + user + " 🚀");
+
+document.getElementById("userBox").innerText="👤 "+user;
+document.getElementById("welcomeMsg").innerText="Olá "+user+"! Vamos começar 🎯";
 }
 
 function show(p){
@@ -24,6 +33,10 @@ function load(){
 let q=quiz[i];
 document.getElementById("q").innerText=q.q;
 
+/* 🔥 ADIÇÃO: progresso */
+document.getElementById("progress").innerText=
+"Pergunta " + (i+1) + " de " + quiz.length;
+
 let box=document.getElementById("a");
 box.innerHTML="";
 
@@ -35,8 +48,14 @@ b.onclick=()=>{
 if(idx===q.c){
 score++;
 document.getElementById("f").innerText="✔ certo";
+document.getElementById("f").style.color="lightgreen";
+
+/* 🔥 ADIÇÃO: XP + nível */
+levelUp();
+
 }else{
 document.getElementById("f").innerText="❌ errado";
+document.getElementById("f").style.color="red";
 }
 }
 
@@ -53,10 +72,23 @@ if(i<quiz.length){
 load();
 }else{
 document.getElementById("q").innerText="Fim!";
-document.getElementById("a").innerHTML="Pontuação: "+score;
+document.getElementById("a").innerHTML=
+"Pontuação: "+score+" / "+quiz.length;
+
+/* 🔥 ADIÇÃO: resultado final bonito */
+document.getElementById("progress").innerText=
+"🏁 Quiz finalizado!";
 
 save();
 showRank();
+}
+}
+
+/* 🔥 ADIÇÃO: sistema de nível simples */
+function levelUp(){
+if(score % 2 === 0){
+level++;
+console.log("Level up: "+level);
 }
 }
 
@@ -75,5 +107,10 @@ document.getElementById("ranking").innerHTML=
 r.map(x=>`<p>🏅 ${x.n} - ${x.s}</p>`).join("");
 }
 
+/* 🔥 ADIÇÃO: carregar ranking sempre atualizado */
+function init(){
 load();
 showRank();
+}
+
+init();
