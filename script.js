@@ -1,77 +1,145 @@
-/**
- * SISTEMA INTERATIVO - CIDADANIA DIGITAL E IA
- */
+let user = "";
+let xp = 0;
+let level = 1;
+let index = 0;
 
-// Garante que o código execute apenas após o carregamento completo do HTML
-document.addEventListener("DOMContentLoaded", () => {
-    inicializarMenu();
-});
+const quiz = [
+{
+q:"O que é cidadania digital?",
+a:["Uso responsável da internet","Jogo","Virus"],
+c:0
+},
+{
+q:"IA significa?",
+a:["Internet Avançada","Inteligência Artificial","Input Automático"],
+c:1
+},
+{
+q:"Boa prática online?",
+a:["Compartilhar senha","Respeitar pessoas","Fake news"],
+c:1
+},
+{
+q:"Segurança digital é?",
+a:["Proteção de dados","Memes","Jogos"],
+c:0
+},
+{
+q:"IA aprende com?",
+a:["Dados","Sorte","Vídeos aleatórios"],
+c:0
+}
+];
 
-/**
- * 1. GERENCIAMENTO DO QUIZ
- * Valida a resposta do usuário, aplica classes visuais do CSS e exibe mensagens.
- * @param {HTMLElement} elemento - O elemento da opção clicada.
- * @param {boolean} status - Se a resposta é verdadeira (true) ou falsa (false).
- */
-function verificarResposta(elemento, status) {
-    // Seleciona todas as opções do quiz dentro do container correspondente
-    const container = elemento.parentElement;
-    const opcoes = container.querySelectorAll('.opcao-quiz');
-    const resultado = document.getElementById('resultado-quiz');
+// LOGIN
+function start(){
+user = document.getElementById("userInput").value;
 
-    // Remove classes de feedback anteriores de todas as opções
-    opcoes.forEach(op => {
-        op.classList.remove('correta', 'errada');
-    });
-
-    // Aplica o feedback visual e a mensagem com base na escolha do usuário
-    if (status === true) {
-        elemento.classList.add('correta');
-        resultado.innerHTML = "🎉 Correto! A transparência é a base da cidadania digital.";
-        resultado.style.color = "var(--cor-sucesso)"; // Usa a variável do CSS
-    } else {
-        elemento.classList.add('errada');
-        resultado.innerHTML = "❌ Tente novamente. Pense no impacto coletivo da desinformação.";
-        resultado.style.color = "var(--cor-erro)"; // Usa a variável do CSS
-    }
+if(user === ""){
+alert("Digite seu nome");
+return;
 }
 
-/**
- * 2. COMPORTAMENTO DO MENU & NAVEGAÇÃO
- * Adiciona efeitos visuais ao rolar a página e corrige comportamentos de link.
- */
-function inicializarMenu() {
-    const header = document.querySelector('header');
+document.getElementById("loginScreen").style.display = "none";
 
-    // Altera o fundo do cabeçalho ao rolar a página (efeito blur/escurecer)
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.style.backgroundColor = "rgba(11, 15, 25, 0.95)";
-            header.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.3)";
-        } else {
-            header.style.backgroundColor = "rgba(11, 15, 25, 0.9)";
-            header.style.boxShadow = "none";
-        }
-    });
+document.getElementById("userInfo").innerText = "👤 " + user;
 
-    // Adiciona suporte a rolagem suave nativa para navegadores antigos se necessário
-    const linksMenu = document.querySelectorAll('.nav-menu a, .btn');
-    linksMenu.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const href = link.getAttribute('href');
-            
-            // Verifica se o link é uma âncora interna
-            if (href.startsWith('#')) {
-                e.preventDefault();
-                const elementoDestino = document.querySelector(href);
-                
-                if (elementoDestino) {
-                    elementoDestino.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }
-        });
-    });
+loadQuiz();
+loadRanking();
+showSection("home");
+}
+
+// SEÇÕES
+function showSection(id){
+document.querySelectorAll(".section").forEach(s=>{
+s.classList.remove("active");
+});
+
+document.getElementById(id).classList.add("active");
+}
+
+// QUIZ
+function loadQuiz(){
+let q = quiz[index];
+
+document.getElementById("question").innerText = q.q;
+
+let box = document.getElementById("answers");
+box.innerHTML = "";
+
+q.a.forEach((item,i)=>{
+let btn = document.createElement("button");
+btn.innerText = item;
+
+btn.onclick = ()=>{
+if(i === q.c){
+xp += 10;
+document.getElementById("feedback").innerText = "✔ Correto!";
+levelUp();
+}else{
+document.getElementById("feedback").innerText = "❌ Errado!";
+}
+};
+
+box.appendChild(btn);
+});
+}
+
+function next(){
+index++;
+
+document.getElementById("feedback").innerText = "";
+
+if(index < quiz.length){
+loadQuiz();
+}else{
+saveRanking();
+
+document.getElementById("question").innerText = "Fim do Quiz!";
+document.getElementById("answers").innerHTML =
+"XP final: " + xp;
+
+loadRanking();
+}
+}
+
+// LEVEL SYSTEM
+function levelUp(){
+if(xp % 30 === 0){
+level++;
+alert("🔥 Level up! Você está no nível " + level);
+}
+}
+
+// RANKING
+function saveRanking(){
+let data = JSON.parse(localStorage.getItem("rank")) || [];
+
+data.push({
+name:user,
+xp:xp,
+level:level
+});
+
+localStorage.setItem("rank", JSON.stringify(data));
+}
+
+function loadRanking(){
+let data = JSON.parse(localStorage.getItem("rank")) || [];
+
+data.sort((a,b)=>b.xp - a.xp);
+
+let html = "";
+
+data.forEach(d=>{
+html += `
+<div class="card">
+🏅 ${d.name}<br>
+⭐ XP: ${d.xp}<br>
+📊 Level: ${d.level}
+</div>
+`;
+});
+
+document.getElementById("rankingList").innerHTML = html;
 }
