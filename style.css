@@ -1,93 +1,179 @@
+*{
 
-/* 🔥 EFEITO MAIS MODERNO NO SITE */
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
 body{
-scroll-behavior:smooth;
+
+font-family:Arial, Helvetica, sans-serif;
+background:#f4f6f8;
+color:#333;
+
 }
 
-/* 🔥 BOTÕES MAIS BONITOS (animação) */
-button{
-transition:0.2s;
+header{
+
+background:#0b4f8a;
+color:white;
+padding:30px;
+text-align:center;
+
 }
 
-button:active{
-transform:scale(0.95);
+nav{
+
+margin-top:20px;
+
 }
 
-/* 🔥 MELHORIA NOS CARDS */
+nav a{
+
+color:white;
+text-decoration:none;
+margin:15px;
+font-weight:bold;
+
+}
+
+nav a:hover{
+
+color:yellow;
+
+}
+
+.banner{
+
+background:#dcefff;
+padding:40px;
+text-align:center;
+
+}
+
+section{
+
+padding:50px;
+
+}
+
+section h2{
+
+margin-bottom:20px;
+color:#0b4f8a;
+
+}
+
+.cards{
+
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+
+}
+
 .card{
-box-shadow:0 4px 15px rgba(0,0,0,0.4);
+
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+flex:1;
+min-width:250px;
+transition:.3s;
+
 }
 
 .card:hover{
-box-shadow:0 8px 25px rgba(56,189,248,0.3);
+
+transform:scale(1.05);
+
 }
 
-/* 🔥 LOGIN MAIS MODERNO */
-.box{
-box-shadow:0 0 25px rgba(56,189,248,0.4);
+ul{
+
+margin-left:25px;
+line-height:35px;
+
 }
 
-/* 🔥 INPUT MAIS BONITO */
-input{
-border:none;
-border-radius:5px;
-outline:none;
+.linha{
+
+display:flex;
+justify-content:space-around;
+flex-wrap:wrap;
+margin-top:30px;
+
 }
 
-/* 🔥 HERO MAIS PROFISSIONAL */
-.hero{
-background-size:cover;
-background-position:center;
-box-shadow:inset 0 0 100px rgba(0,0,0,0.6);
-}
+.linha div{
 
-/* 🔥 TÍTULO HERO MELHOR */
-.hero h1{
-font-size:22px;
+background:white;
+padding:20px;
+width:200px;
+margin:10px;
 text-align:center;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+
 }
 
-/* 🔥 ANIMAÇÃO DE ENTRADA DAS PÁGINAS */
-.page{
-animation:fade 0.4s ease-in;
+.linha h3{
+
+font-size:40px;
+color:#0b4f8a;
+
 }
 
-@keyframes fade{
-from{
-opacity:0;
-transform:translateY(10px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+button{
+
+padding:15px;
+margin:10px;
+background:#0b4f8a;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+
 }
 
-/* 🔥 RANKING MAIS BONITO */
-#ranking p{
-background:#0f172a;
-padding:10px;
-margin:8px 0;
-border-radius:6px;
-border-left:3px solid #38bdf8;
+button:hover{
+
+background:#08365d;
+
 }
 
-/* 🔥 HEADER MAIS MODERNO */
-header{
-box-shadow:0 2px 10px rgba(0,0,0,0.5);
+#resultado{
+
+margin-top:20px;
+color:green;
+
 }
 
-/* 🔥 NAV COM EFEITO */
-nav button{
-transition:0.2s;
-}
-
-nav button:hover{
-transform:translateY(-2px);
-}
-
-/* 🔥 FOOTER MAIS PROFISSIONAL */
 footer{
-opacity:0.8;
-font-size:14px;
+
+background:#222;
+color:white;
+padding:30px;
+text-align:center;
+
+}
+
+@media(max-width:768px){
+
+.cards{
+
+flex-direction:column;
+
+}
+
+.linha{
+
+flex-direction:column;
+align-items:center;
+
+}
+
 }
