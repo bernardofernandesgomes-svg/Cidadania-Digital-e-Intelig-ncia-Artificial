@@ -1,97 +1,226 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cidadania Digital Pro</title>
+
+<title>Cidadania Digital e Inteligência Artificial</title>
+
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="login">
-  <div class="box">
-    <h1>🌐 Bem-vindo</h1>
-    <input id="name" placeholder="Digite seu nome">
-    <button onclick="entrar()">Entrar</button>
-  </div>
-</div>
-
 <header>
-  <h2>🚀 Cidadania Digital Pro</h2>
 
-  <!-- 🔥 ADIÇÃO: usuário logado -->
-  <div id="userBox" style="color:#38bdf8; font-size:14px;"></div>
-</header>
+<h1>Cidadania Digital e Inteligência Artificial</h1>
+
+<p>Como utilizar a tecnologia com responsabilidade e ética.</p>
 
 <nav>
-  <button onclick="show('home')">Home</button>
-  <button onclick="show('quiz')">Quiz</button>
-  <button onclick="show('rank')">Ranking</button>
+
+<a href="#cidadania">Cidadania Digital</a>
+
+<a href="#ia">Inteligência Artificial</a>
+
+<a href="#vantagens">Vantagens</a>
+
+<a href="#riscos">Riscos</a>
+
+<a href="#quiz">Quiz</a>
+
 </nav>
 
-<section id="home" class="page active">
+</header>
 
-  <div class="hero">
-    <h1>Aprenda tecnologia de forma simples</h1>
-  </div>
+<section class="banner">
 
-  <!-- 🔥 ADIÇÃO: mensagem extra -->
-  <p id="welcomeMsg" style="text-align:center; margin-top:10px; color:#38bdf8;"></p>
+<h2>Bem-vindo!</h2>
 
-  <div class="grid">
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
-      <h3>Cidadania Digital</h3>
-      <p>Uso responsável da internet e redes sociais.</p>
-    </div>
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
-      <h3>Inteligência Artificial</h3>
-      <p>Máquinas que aprendem com dados.</p>
-    </div>
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b">
-      <h3>Segurança</h3>
-      <p>Proteja seus dados online.</p>
-    </div>
-
-  </div>
+<p>
+A internet e a Inteligência Artificial fazem parte do nosso dia a dia.
+Entender como utilizá-las de forma consciente é essencial para uma sociedade
+mais segura e responsável.
+</p>
 
 </section>
 
-<section id="quiz" class="page">
+<section id="cidadania">
 
-  <div class="box2">
+<h2>O que é Cidadania Digital?</h2>
 
-    <h2 id="q">Pergunta</h2>
+<p>
 
-    <!-- 🔥 ADIÇÃO: progresso -->
-    <p id="progress" style="color:#38bdf8;"></p>
+Cidadania Digital é o conjunto de comportamentos responsáveis que devemos ter
+ao utilizar a internet, redes sociais, aplicativos e outras tecnologias.
 
-    <div id="a"></div>
-    <p id="f"></p>
+Ela envolve respeito às pessoas, proteção de dados, combate às fake news,
+uso ético das informações e segurança digital.
 
-    <button onclick="next()">Próxima</button>
-  </div>
+</p>
+
+<div class="cards">
+
+<div class="card">
+<h3>Respeito</h3>
+
+<p>
+Respeitar opiniões, evitar discursos de ódio e praticar a boa convivência
+na internet.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Segurança</h3>
+
+<p>
+Criar senhas fortes, proteger informações pessoais e evitar golpes.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Responsabilidade</h3>
+
+<p>
+Pensar antes de publicar conteúdos e verificar se as informações são verdadeiras.
+</p>
+
+</div>
+
+</div>
 
 </section>
 
-<section id="rank" class="page">
+<section id="ia">
 
-  <h2>🏆 Ranking</h2>
-  <div id="ranking"></div>
+<h2>O que é Inteligência Artificial?</h2>
+
+<p>
+
+A Inteligência Artificial (IA) é uma tecnologia capaz de realizar tarefas que normalmente
+exigiriam inteligência humana, como reconhecer imagens, entender textos,
+traduzir idiomas e responder perguntas.
+
+Hoje ela está presente em celulares, carros, assistentes virtuais,
+redes sociais, bancos e hospitais.
+
+</p>
+
+</section>
+
+<section id="vantagens">
+
+<h2>Vantagens da IA</h2>
+
+<ul>
+
+<li>Automação de tarefas repetitivas.</li>
+
+<li>Maior rapidez na análise de dados.</li>
+
+<li>Ajuda na medicina.</li>
+
+<li>Educação personalizada.</li>
+
+<li>Assistentes virtuais.</li>
+
+<li>Maior produtividade.</li>
+
+</ul>
+
+</section>
+
+<section id="riscos">
+
+<h2>Riscos da IA</h2>
+
+<ul>
+
+<li>Fake News.</li>
+
+<li>Deepfakes.</li>
+
+<li>Uso inadequado de dados pessoais.</li>
+
+<li>Dependência excessiva da tecnologia.</li>
+
+<li>Substituição de alguns empregos.</li>
+
+<li>Falta de transparência em algumas decisões.</li>
+
+</ul>
+
+</section>
+
+<section>
+
+<h2>Como ser um bom cidadão digital?</h2>
+
+<div class="linha">
+
+<div>
+<h3>1</h3>
+<p>Respeite outras pessoas na internet.</p>
+</div>
+
+<div>
+<h3>2</h3>
+<p>Não compartilhe fake news.</p>
+</div>
+
+<div>
+<h3>3</h3>
+<p>Proteja suas senhas.</p>
+</div>
+
+<div>
+<h3>4</h3>
+<p>Use a IA de forma ética.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="quiz">
+
+<h2>Quiz</h2>
+
+<p>Qual destas atitudes representa uma boa cidadania digital?</p>
+
+<button onclick="resposta('certo')">
+Verificar se a notícia é verdadeira antes de compartilhar.
+</button>
+
+<button onclick="resposta('errado')">
+Compartilhar qualquer notícia rapidamente.
+</button>
+
+<button onclick="resposta('errado')">
+Divulgar senhas para amigos.
+</button>
+
+<h3 id="resultado"></h3>
 
 </section>
 
 <footer>
-feito por Bernardo Fernandes
+
+<p>
+
+Projeto Escolar - Cidadania Digital e Inteligência Artificial
+
+</p>
+
+<button onclick="topo()">Voltar ao topo</button>
+
 </footer>
 
 <script src="script.js"></script>
+
 </body>
 </html>
